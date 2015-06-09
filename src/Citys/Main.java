@@ -92,7 +92,6 @@ class Graph {
             }
         }
         return best;
-
     }
 
     public double [] distancesFrom (int source){
