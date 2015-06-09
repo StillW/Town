@@ -14,57 +14,47 @@ import java.util.List;
 class Graph {
 
     private double [][]edges;
-    /*el argumento es el n?mero de v?rtices en este grafo*/
+
     public Graph(int vertices){
 
         edges = new double [vertices][vertices];
     }
 
-    /*a?ade una arista de peso 1 a partir de i hasta j*/
     public void addEdge(int i, int j){
 
         edges[i][j]=1;
     }
 
-    /*a?ade aristas de peso 1 de i hasta j y de j hasta i*/
     public void addUndirectedEdge (int i, int j){
 
         edges[i][j]=1;
         edges[j][i]=1;
     }
 
-    /*retorna el costo de la arista de i y j*/
     public double getEdge(int i, int j){
 
         return edges[i][j];
     }
 
-    /*retorna true si hay una arista entre i y j*/
     public boolean hasEdge (int i, int j){
 
         return edges[i][j] !=0.0;
     }
 
-    /*fija el peso de la arista entre i y j*/
     public void setEdge (int i, int j, double weight){
 
         edges [i][j] = weight;
     }
 
-    /*fija el peso de la arista entre i y j y entre j e i*/
     public void setUndirectedEdge (int i, int j, double weight){
 
         edges[i][j] = weight;
         edges[j][i] = weight;
     }
 
-    /*retorna el n?mero de v?rtices en este grafo*/
-
     public int size() {
         return edges.length;
     }
-
-    /*retorna una lista de los vecinos del v?rtice i*/
 
     public List <Integer> neighbors (int i){
 
@@ -78,10 +68,6 @@ class Graph {
         return result;
     }
 
-    /*retorna 0 si i y j son id?nticos, retorna infinito si no hay arista entre ellos o si
-     * el peso entre las aristas si hay uno*/
-
-
     public double getCost(int i , int j){
 
         if (i==j){
@@ -93,9 +79,6 @@ class Graph {
 
         return edges[i][j];
     }
-
-    /*dijkstra, retorna el ?ndice del elemento m?s peque?o de distances, ignorando
-     * aquellos en visited*/
 
     protected int cheapest (double [] distances, boolean [] visited){
 
@@ -131,11 +114,7 @@ class Graph {
             }
         }
         return result;
-
-
     }
-
-
 
     /*test Graph*/
     /*public static void main(String args[]){
@@ -165,18 +144,14 @@ class Graph {
     }*/
 }
 
-
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
 
         BufferedReader r = new BufferedReader (new FileReader(new File("D:\\TSHPATHInput.txt")));
         //BufferedReader r1 = new BufferedReader (new InputStreamReader(System.in));
 
         String line = r.readLine();
-
-        // System.out.println(line); //Linea de prueba
 
         int s = Integer.parseInt(line);
 
@@ -184,14 +159,11 @@ public class Main {
 
             String [] citiesIds = new String[10000];
 
-
             line = r.readLine();
-
-            //System.out.println(line); //Linea de prueba
 
             int n = Integer.parseInt(line);
 
-            int graphSize = n +1; // por el problema de indexaci?n desde 0 en el arreglo
+            int graphSize = n +1;
             Graph g = new Graph (graphSize);
 
             for (int cityIndex=0; cityIndex<n;cityIndex++){
@@ -199,27 +171,20 @@ public class Main {
 
                 line = r.readLine();
 
-                //      System.out.println(line); //Linea de prueba
-
                 String NAME = line;
 
 
-                int auxCityIndex = cityIndex +1; // para mantener la consistencia en la indexaci?n
+                int auxCityIndex = cityIndex +1;
 
                 citiesIds[auxCityIndex] = NAME;
 
                 line = r.readLine();
 
-                //    System.out.println(line); //Linea de prueba
-
                 int p = Integer.parseInt(line);
-
 
                 for (int neighborIndex=0;neighborIndex<p;neighborIndex++){
 
                     line = r.readLine();
-
-                    //      System.out.println(line); //Linea de prueba
 
                     String [] brokenLine = line.split(" ");
 
@@ -230,30 +195,20 @@ public class Main {
 
                 }
 
-
-
             }
 
             line = r.readLine();
 
-            //System.out.println(line); //Linea de prueba
-
             int routesToFind = Integer.parseInt(line);
-
-
 
             for (int routesIndex=0; routesIndex<routesToFind; routesIndex++){
 
                 line = r.readLine();
 
-                //  System.out.println(line); //Linea de prueba
-
                 String [] cityNames = line.split(" ");
 
                 String source = cityNames[0];
                 String destination = cityNames[1];
-
-
 
                 int sourceIndex = Arrays.binarySearch(citiesIds,source);
 
@@ -265,9 +220,7 @@ public class Main {
 
                 System.out.println(destinationDistance);
 
-
             }
-
 
         }
 
