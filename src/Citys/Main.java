@@ -13,11 +13,11 @@ import java.util.List;
 
 class Graph {
 
-    private double [][]edges;
+    private double [][]edges; //матрица из N строк и X столбцов
 
-    public Graph(int vertices){
+    public Graph(int vertices){ //вершины
 
-        edges = new double [vertices][vertices];
+        edges = new double [vertices][vertices]; //края заполняем вершинами матрица 5 на 5
     }
 
     public void addEdge(int i, int j){
@@ -80,7 +80,7 @@ class Graph {
         return edges[i][j];
     }
 
-    protected int cheapest (double [] distances, boolean [] visited){
+     int getCheapestRoute (double[] distances, boolean[] visited){ //самый короткий путь
 
         int best =-1;
         for (int i=0; i<size(); i++){
@@ -105,7 +105,7 @@ class Graph {
         boolean []visited = new boolean [size()];
         for (int i =0; i<size();i++){
 
-            int vertex = cheapest (result,visited);
+            int vertex = getCheapestRoute(result, visited);
             visited [vertex]=true;
 
             for (int j =0; j<size();j++){
@@ -114,9 +114,10 @@ class Graph {
         }
         return result;
     }
+ /*test Graph*/
 
-    /*test Graph*/
-    /*public static void main(String args[]){
+  /*
+    public static void main(String args[]){
 
         Graph g = new Graph(5);
 
@@ -147,50 +148,49 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        BufferedReader r = new BufferedReader (new FileReader(new File("D:\\TSHPATHInput.txt")));
+        BufferedReader r = new BufferedReader(new FileReader(new File("D:\\TSHPATHInput.txt")));
         //BufferedReader r1 = new BufferedReader (new InputStreamReader(System.in));
 
         String line = r.readLine();
 
-        int s = Integer.parseInt(line);
+
+        int s = Integer.parseInt(line); // парсим строку из файла
 
         for (int testIndex=0; testIndex<s; testIndex++){
 
-            String [] citiesIds = new String[10000];
+            String [] citiesIds = new String[6]; //массив из 100 элементов айди городов
 
-            line = r.readLine();
+            line = r.readLine(); //читаем еще строку из файла
 
-            int n = Integer.parseInt(line);
+            int n = Integer.parseInt(line); //парсим
 
-            int graphSize = n +1;
-            Graph g = new Graph (graphSize);
+            int graphSize = n +1; //прибавляем еденицу к распарсиному значинию будет 5
+            Graph g = new Graph (graphSize); //создаем обьект класса Вершины
 
-            for (int cityIndex=0; cityIndex<n;cityIndex++){
+            for (int cityIndex=0; cityIndex<n;cityIndex++){ //тут n = 4
 
+                line = r.readLine(); //читаем третью строку - это название гороода
 
-                line = r.readLine();
-
-                String NAME = line;
-
+                String NAME = line; //присваемваем его в ИМЯ
 
                 int auxCityIndex = cityIndex +1;
 
-                citiesIds[auxCityIndex] = NAME;
+                citiesIds[auxCityIndex] = NAME; //загоняем Имя в массив в первом индексе будет лежать gdansk
 
-                line = r.readLine();
+                line = r.readLine(); //читаем опять
 
-                int p = Integer.parseInt(line);
+                int p = Integer.parseInt(line); //парсим тут количество соседних городов
 
                 for (int neighborIndex=0;neighborIndex<p;neighborIndex++){
 
                     line = r.readLine();
 
-                    String [] brokenLine = line.split(" ");
+                    String [] brokenLine = line.split(" "); //разбиваем полученную строку на индексы массива
 
-                    int cityToConnect = Integer.parseInt(brokenLine[0]);
-                    int weightOfConnection = Integer.parseInt(brokenLine[1]);
+                    int cityToConnect = Integer.parseInt(brokenLine[0]); //тут индекс соседнего города 2
+                    int weightOfConnection = Integer.parseInt(brokenLine[1]); //тут стоимость до него
 
-                    g.setEdge(auxCityIndex,cityToConnect, weightOfConnection);
+                    g.setEdge(auxCityIndex,cityToConnect, weightOfConnection);//тут передаем Город, ближайший к нему индекс и стоимость
 
                 }
 
@@ -211,7 +211,8 @@ public class Main {
 
                 int sourceIndex = Arrays.binarySearch(citiesIds,source);
 
-                int destinationIndex= Arrays.binarySearch(citiesIds, destination);
+                int destinationIndex= Arrays.binarySearch(citiesIds, destination); //на этой строчке выкидывает NullPointerExceprion если в citiesIds дли массива больше 6
+                                                                                    //если меньше семи то .ArrayIndexOutOfBoundsException: -4
 
                 double [] distancesFromSource = g.distancesFrom(sourceIndex);
 
