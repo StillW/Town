@@ -13,40 +13,40 @@ import java.util.List;
 
 class Graph {
 
-    private double [][]edges; //матрица из N строк и X столбцов
+    private double[][] edges; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ N пїЅпїЅпїЅпїЅпїЅ пїЅ X пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-    public Graph(int vertices){ //вершины
+    public Graph(int vertices) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        edges = new double [vertices][vertices]; //края заполняем вершинами матрица 5 на 5
+        edges = new double[vertices][vertices]; //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅ 5
     }
 
-    public void addEdge(int i, int j){
+    public void addEdge(int i, int j) {
 
-        edges[i][j]=1;
+        edges[i][j] = 1;
     }
 
-    public void addUndirectedEdge (int i, int j){
+    public void addUndirectedEdge(int i, int j) {
 
-        edges[i][j]=1;
-        edges[j][i]=1;
+        edges[i][j] = 1;
+        edges[j][i] = 1;
     }
 
-    public double getEdge(int i, int j){
+    public double getEdge(int i, int j) {
 
         return edges[i][j];
     }
 
-    public boolean hasEdge (int i, int j){
+    public boolean hasEdge(int i, int j) {
 
-        return edges[i][j] !=0.0;
+        return edges[i][j] != 0.0;
     }
 
-    public void setEdge (int i, int j, double weight){
+    public void setEdge(int i, int j, double weight) {
 
-        edges [i][j] = weight;
+        edges[i][j] = weight;
     }
 
-    public void setUndirectedEdge (int i, int j, double weight){
+    public void setUndirectedEdge(int i, int j, double weight) {
 
         edges[i][j] = weight;
         edges[j][i] = weight;
@@ -56,11 +56,11 @@ class Graph {
         return edges.length;
     }
 
-    public List <Integer> neighbors (int i){
+    public List<Integer> neighbors(int i) {
 
-        List <Integer> result = new ArrayList<Integer>();
-        for (int j=0; j<size();j++){
-            if (hasEdge(i,j)){
+        List<Integer> result = new ArrayList<Integer>();
+        for (int j = 0; j < size(); j++) {
+            if (hasEdge(i, j)) {
 
                 result.add(j);
             }
@@ -68,48 +68,48 @@ class Graph {
         return result;
     }
 
-    public double getCost(int i , int j){
+    public double getCost(int i, int j) {
 
-        if (i==j){
+        if (i == j) {
             return 0.0;
         }
-        if (edges[i][j]==0.0){
+        if (edges[i][j] == 0.0) {
             return Double.POSITIVE_INFINITY;
         }
 
         return edges[i][j];
     }
 
-     int getCheapestRoute (double[] distances, boolean[] visited){ //самый короткий путь
+    int getCheapestRoute(double[] distances, boolean[] visited) { //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-        int best =-1;
-        for (int i=0; i<size(); i++){
+        int best = -1;
+        for (int i = 0; i < size(); i++) {
 
             if (!visited[i]
                     && ((best < 0) || (distances[i] < distances[best]))) {
 
-                best =i;
+                best = i;
             }
         }
         return best;
     }
 
-    public double [] distancesFrom (int source){
+    public double[] distancesFrom(int source) {
 
-        double [] result = new double[size()];
+        double[] result = new double[size()];
 
         Arrays.fill(result, Double.POSITIVE_INFINITY);
 
-        result [source]=0;
+        result[source] = 0;
 
-        boolean []visited = new boolean [size()];
-        for (int i =0; i<size();i++){
+        boolean[] visited = new boolean[size()];
+        for (int i = 0; i < size(); i++) {
 
             int vertex = getCheapestRoute(result, visited);
-            visited [vertex]=true;
+            visited[vertex] = true;
 
-            for (int j =0; j<size();j++){
-                result [j] = Math.min(result[j], result[vertex]+getCost(vertex,j));
+            for (int j = 0; j < size(); j++) {
+                result[j] = Math.min(result[j], result[vertex] + getCost(vertex, j));
             }
         }
         return result;
@@ -154,43 +154,43 @@ public class Main {
         String line = r.readLine();
 
 
-        int s = Integer.parseInt(line); // парсим строку из файла
+        int s = Integer.parseInt(line);
 
-        for (int testIndex=0; testIndex<s; testIndex++){
+        for (int testIndex = 0; testIndex < s; testIndex++) {
 
-            String [] citiesIds = new String[6]; //массив из 100 элементов айди городов
+            String[] citiesIds = new String[100];
 
-            line = r.readLine(); //читаем еще строку из файла
+            line = r.readLine();
 
-            int n = Integer.parseInt(line); //парсим
+            int n = Integer.parseInt(line);
 
-            int graphSize = n +1; //прибавляем еденицу к распарсиному значинию будет 5
-            Graph g = new Graph (graphSize); //создаем обьект класса Вершины
+            int graphSize = n + 1;
+            Graph g = new Graph(graphSize);
 
-            for (int cityIndex=0; cityIndex<n;cityIndex++){ //тут n = 4
+            for (int cityIndex = 0; cityIndex < n; cityIndex++) {
 
-                line = r.readLine(); //читаем третью строку - это название гороода
+                line = r.readLine();
 
-                String NAME = line; //присваемваем его в ИМЯ
+                String NAME = line;
 
-                int auxCityIndex = cityIndex +1;
+                int auxCityIndex = cityIndex + 1;
 
-                citiesIds[auxCityIndex] = NAME; //загоняем Имя в массив в первом индексе будет лежать gdansk
+                citiesIds[auxCityIndex] = NAME;
 
-                line = r.readLine(); //читаем опять
+                line = r.readLine();
 
-                int p = Integer.parseInt(line); //парсим тут количество соседних городов
+                int p = Integer.parseInt(line); //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-                for (int neighborIndex=0;neighborIndex<p;neighborIndex++){
+                for (int neighborIndex = 0; neighborIndex < p; neighborIndex++) {
 
                     line = r.readLine();
 
-                    String [] brokenLine = line.split(" "); //разбиваем полученную строку на индексы массива
+                    String[] brokenLine = line.split(" "); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-                    int cityToConnect = Integer.parseInt(brokenLine[0]); //тут индекс соседнего города 2
-                    int weightOfConnection = Integer.parseInt(brokenLine[1]); //тут стоимость до него
+                    int cityToConnect = Integer.parseInt(brokenLine[0]); //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 2
+                    int weightOfConnection = Integer.parseInt(brokenLine[1]); //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
 
-                    g.setEdge(auxCityIndex,cityToConnect, weightOfConnection);//тут передаем Город, ближайший к нему индекс и стоимость
+                    g.setEdge(auxCityIndex, cityToConnect, weightOfConnection);
 
                 }
 
@@ -200,23 +200,22 @@ public class Main {
 
             int routesToFind = Integer.parseInt(line);
 
-            for (int routesIndex=0; routesIndex<routesToFind; routesIndex++){
+            for (int routesIndex = 0; routesIndex < routesToFind; routesIndex++) {
 
                 line = r.readLine();
 
-                String [] cityNames = line.split(" ");
+                String[] cityNames = line.split(" ");
 
                 String source = cityNames[0];
                 String destination = cityNames[1];
 
-                int sourceIndex = Arrays.binarySearch(citiesIds,source);
+                int sourceIndex = Arrays.asList(citiesIds).indexOf(source);
 
-                int destinationIndex= Arrays.binarySearch(citiesIds, destination); //на этой строчке выкидывает NullPointerExceprion если в citiesIds дли массива больше 6
-                                                                                    //если меньше семи то .ArrayIndexOutOfBoundsException: -4
+                int destinationIndex = Arrays.asList(citiesIds).indexOf(destination);
 
-                double [] distancesFromSource = g.distancesFrom(sourceIndex);
+                double[] distancesFromSource = g.distancesFrom(sourceIndex);
 
-                int destinationDistance = (int)distancesFromSource[destinationIndex];
+                int destinationDistance = (int) distancesFromSource[destinationIndex];
 
                 System.out.println(destinationDistance);
 
